@@ -8,7 +8,7 @@ USE `mydb`;
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` char(1) NOT NULL,
+  `url` varchar(1000) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -16,36 +16,26 @@ CREATE TABLE `files` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `file_project`;
-CREATE TABLE `file_project` (
+DROP TABLE IF EXISTS `file_locate`;
+CREATE TABLE `file_locate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `file_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `file_id` (`file_id`),
-  KEY `project_id` (`project_id`),
-  CONSTRAINT `file_project_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`),
-  CONSTRAINT `file_project_ibfk_2` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`),
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `file_task`;
-CREATE TABLE `file_task` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `file_id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `file_id` (`file_id`),
+  KEY `project_id` (`project_id`),
   KEY `task_id` (`task_id`),
-  CONSTRAINT `file_task_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`),
-  CONSTRAINT `file_task_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
+  CONSTRAINT `file_locate_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`),
+  CONSTRAINT `file_locate_ibfk_2` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`),
+  CONSTRAINT `file_locate_ibfk_3` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(1) NOT NULL,
+  `name` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -66,7 +56,7 @@ CREATE TABLE `project_user` (
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `task` char(1) NOT NULL,
+  `task` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -93,8 +83,6 @@ CREATE TABLE `task_user` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(1) NOT NULL,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
