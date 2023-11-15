@@ -56,13 +56,14 @@ CREATE TABLE `project_user` (
 DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `task` varchar(255) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `creator` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
+  KEY `user_id` (`creator`),
   KEY `project_id` (`project_id`),
-  CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`creator`) REFERENCES `users` (`id`),
+  CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`creator`) REFERENCES `users` (`id`),
   CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
